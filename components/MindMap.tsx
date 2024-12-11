@@ -126,7 +126,7 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
       onNodeClick={handleNodeClick}
       draggable={true}
       fitView
-      className="bg-zinc-50 rounded-l overflow-hidden"    
+      className="bg-zinc-25 rounded-l overflow-hidden"    
     >
       <Controls />
       <MiniMap />

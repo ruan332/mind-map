@@ -98,7 +98,10 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
 
       <CardContent className="flex-1 flex flex-col min-h-0">
         <form onSubmit={handleSubmitWithFiles} className="space-y-4">
-          <div className="relative flex flex-col items-center justify-center border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 transition-colors hover:border-muted-foreground/50">
+          <div className="relative flex flex-col items-center justify-center 
+            border border-dashed border-[#E6E6E6] 
+            bg-[#FCFCFC] hover:bg-[#F5F5F5] transition duration-500 hover:duration-200
+            rounded-lg p-6 transition-colors hover:border-muted-foreground/50">
             <input
               type="file"
               onChange={handleFileChange}
