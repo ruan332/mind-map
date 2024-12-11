@@ -83,8 +83,8 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
     <Card className="w-full h-full border-none shadow-none flex flex-col">
       <CardHeader className="text-center space-y-6 flex-shrink-0">
         <div className="space-y-2 mt-4">
-          <CardTitle className="text-2xl tracking-normal font-semibold">
-            Mind Map Generator
+          <CardTitle className="text-2xl mb-4 tracking-normal font-bold">
+            Mind Map Maker
           </CardTitle>
           <CardDescription className="text-base">
             Upload a PDF to generate a mind map using{" "}
@@ -121,7 +121,10 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
           </div>
           <Button 
             type="submit" 
-            className="w-full" 
+            className="w-full bg-orange-500 font-mono 
+            shadow-md shadow-orange-800/20
+            hover:bg-orange-600 hover:shadow-orange-800/30
+            active:shadow-none transition-all duration-400" 
             disabled={files.length === 0}
           >
             {isLoading ? (
@@ -130,7 +133,7 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
                 <span>Analyzing PDF...</span>
               </span>
             ) : (
-              "Extract Key Points"
+              "Extract key points"
             )}
           </Button>
         </form>

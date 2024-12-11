@@ -111,16 +111,15 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
   if (!data.children?.length) {
     return (
       <div className="h-full w-full flex items-center justify-center bg-white font-system">
-        <div className="text-center space-y-4 max-w-[400px] mx-auto p-8">
-          <FileUp className="h-12 w-12 text-zinc-400 mx-auto" />
+        <div className="text-center space-y-3 max-w-[400px] height-auto mx-auto p-8">
+          <FileUp className="h-12 w-12 text-zinc-300 mx-auto mb-6" />
           <h3 className="text-xl font-medium">No Mind Map Yet</h3>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-400 pb-4">
             Upload a PDF to generate an interactive mind map of its key concepts.
           </p>
           <Button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
-            variant="outline"
-            className="mt-4"
+            className="font-mono bg-zinc-100 text-zinc-800 shadow-none hover:bg-zinc-200 duration-200"
           >
             Upload File
           </Button>
