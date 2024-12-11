@@ -80,7 +80,7 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
   }
 
   return (
-    <Card className="w-full h-full border-none flex flex-col max-h-screen">
+    <Card className="w-full h-full border-none shadow-none">
       <CardHeader className="text-center space-y-6">
         <div className="space-y-2 mt-4">
           <CardTitle className="text-2xl ">

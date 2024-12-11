@@ -3,6 +3,10 @@
 @tailwind utilities;
 @import url('./xyflow-theme.css');
 
+.font-system {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
 @layer base {
     :root {
         --background: 0 0% 100%;

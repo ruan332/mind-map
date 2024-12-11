@@ -81,9 +81,9 @@ export default function PDFAnalyzer() {
   }
 
   return (
-    <div className="max-h-[100dvh] w-full flex gap-4 p-4">
+    <div className="max-h-[100dvh] w-full flex gap-4 p-4 bg-zinc-50">
       {/* PDF Extractor - Fixed width, pinned to left */}
-      <div className="w-[400px] flex-shrink-0 border border-zinc-150 rounded-xl">
+      <div className="w-[400px] flex-shrink-0 border border-zinc-100 rounded-xl shadow-sm">
         <PDFExtractor 
           onExtractComplete={handleExtractComplete}
           onPartialContent={handlePartialContent}
@@ -91,7 +91,7 @@ export default function PDFAnalyzer() {
       </div>
 
       {/* Mind Map - Takes remaining space */}
-      <div className="flex-grow h-[calc(100vh-2rem)] border border-zinc-200 overflow-hidden rounded-xl">
+      <div className="flex-grow h-[calc(100vh-2rem)] border border-zinc-100 overflow-hidden rounded-xl shadow-none">
         <MindMap 
           data={mindMapData} 
           onNodeClick={(node) => setSelectedNode(node)}

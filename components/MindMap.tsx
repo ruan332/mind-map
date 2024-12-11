@@ -100,7 +100,7 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
 
   if (!data.children?.length) {
     return (
-      <div className="h-full w-full flex items-center justify-center">
+      <div className="h-full w-full flex items-center justify-center bg-white font-system">
         <div className="text-center space-y-4 max-w-[400px] mx-auto p-8">
           <FileUp className="h-12 w-12 text-zinc-400 mx-auto" />
           <h3 className="text-xl font-medium">No Mind Map Yet</h3>
