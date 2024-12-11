@@ -31,6 +31,13 @@ To run the example locally you need to:
 5. `npm run dev` to launch the development server.
 
 
+## Environment Variables
+
+The following environment variables are required:
+
+- `GOOGLE_GENERATIVE_AI_API_KEY`: Your Google Generative AI API key for authentication
+
+
 ## Learn More
 
 To learn more about Vercel AI SDK or Next.js take a look at the following resources:
