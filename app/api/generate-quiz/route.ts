@@ -1,4 +1,4 @@
-import { questionSchema, questionsSchema } from "@/lib/schemas";
+import { pdfExtractSchema } from "@/lib/schemas";
 import { google } from "@ai-sdk/google";
 import { streamObject } from "ai";
 
@@ -14,14 +14,14 @@ export async function POST(req: Request) {
       {
         role: "system",
         content:
-          "You are a teacher. Your job is to take a document, and create a multiple choice test (with 4 questions) based on the content of the document. Each option should be roughly equal in length.",
+          "You are a document analyzer. Extract the most important points from the provided PDF document. Focus on key information, main ideas, and significant details.",
       },
       {
         role: "user",
         content: [
           {
             type: "text",
-            text: "Create a multiple choice test based on this document.",
+            text: "Please read this PDF and extract the key points. Include relevant context where helpful.",
           },
           {
             type: "file",
@@ -31,10 +31,10 @@ export async function POST(req: Request) {
         ],
       },
     ],
-    schema: questionSchema,
-    output: "array",
+    schema: pdfExtractSchema,
+    output: "object",
     onFinish: ({ object }) => {
-      const res = questionsSchema.safeParse(object);
+      const res = pdfExtractSchema.safeParse(object);
       if (res.error) {
         throw new Error(res.error.errors.map((e) => e.message).join("\n"));
       }

@@ -1,20 +1,28 @@
 import { z } from "zod";
 
-export const questionSchema = z.object({
-  question: z.string(),
-  options: z
-    .array(z.string())
-    .length(4)
-    .describe(
-      "Four possible answers to the question. Only one should be correct. They should all be of equal lengths.",
-    ),
-  answer: z
-    .enum(["A", "B", "C", "D"])
-    .describe(
-      "The correct answer, where A is the first option, B is the second, and so on.",
-    ),
+export const pdfExtractSchema = z.object({
+  title: z.string()
+    .min(1, "Title cannot be empty")
+    .max(500, "Title is too long")
+    .describe("The document title"),
+  
+  keyPoints: z.array(
+    z.object({
+      point: z.string()
+        .min(1, "Point cannot be empty")
+        .max(1000, "Point is too long")
+        .describe("A key point from the document"),
+      
+      context: z.string()
+        .min(1, "Context cannot be empty")
+        .max(500, "Context is too long")
+        .optional()
+        .describe("Optional context or section where this point appears")
+    })
+  )
+  .min(1, "At least one key point is required")
+  .max(50, "Too many key points")
+  .describe("List of important points extracted from the document")
 });
 
-export type Question = z.infer<typeof questionSchema>;
-
-export const questionsSchema = z.array(questionSchema).length(4);
+export type PDFExtract = z.infer<typeof pdfExtractSchema>;

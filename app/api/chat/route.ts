@@ -10,8 +10,7 @@ export async function POST(req: Request) {
 
   const result = await streamText({
     model: google("gemini-1.5-flash-latest"),
-    system:
-      "You are a teacher. The user will give you a PDF file and you will have to extract the text from it. You will then have to generate a list of four multiple choice questions, providing four possible answers (while marking the correct answer). The user will then have to answer the questions.",
+    system: "You are a teacher...",
     messages,
   });
 
