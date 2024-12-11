@@ -33,13 +33,11 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
     return allIds;
   });
 
-  const [nodePositions, setNodePositions] = useState<{ [key: string]: { x: number, y: number } }>({})
-
   const { nodes, edges } = useMemo(() => {
     const nodes: Node[] = []
     const edges: Edge[] = []
     let xOffset = 50
-    const ySpacing = 100
+    const ySpacing = 120
     
     const processNode = (node: NodeData, level: number, parentId?: string) => {
       const nodeWidth = 200
@@ -53,7 +51,14 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
           label: node.label,
           hasChildren
         },
-        className: `react-flow__node-default ${hasChildren ? 'cursor-pointer' : ''} bg-white text-black p-2 rounded-lg border border-gray-200`,
+        style: {
+          backgroundColor: '#ffffff',
+          borderColor: '#E4E4E7',
+          borderWidth: 1,
+          borderRadius: 8,
+          padding: 10,
+        },
+        className: `react-flow__node ${hasChildren ? 'cursor-pointer' : ''} rounded-lg border border-gray-200`,
         sourcePosition: Position.Right,
         targetPosition: Position.Left,
         position: { 
@@ -69,7 +74,6 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
           target: node.id,
           type: 'bezier',
           animated: true,
-          style: { stroke: '#94a3b8' },
         })
       }
 
@@ -100,6 +104,7 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
     onNodeClick(node.data)
   }
 
+  // Mind Map empty state
   if (!data.children?.length) {
     return (
       <div className="h-full w-full flex items-center justify-center bg-white font-system">
@@ -107,14 +112,14 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
           <FileUp className="h-12 w-12 text-zinc-400 mx-auto" />
           <h3 className="text-xl font-medium">No Mind Map Yet</h3>
           <p className="text-sm text-zinc-500">
-            Upload a PDF document to automatically generate an interactive mind map of its key points and concepts.
+            Upload a PDF to generate an interactive mind map of its key concepts.
           </p>
           <Button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
             variant="outline"
             className="mt-4"
           >
-            Create Mind Map
+            Upload File
           </Button>
         </div>
       </div>

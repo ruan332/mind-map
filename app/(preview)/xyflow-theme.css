@@ -21,14 +21,6 @@
     --xy-edge-label-color-default: #505050;
 }
  
-.react-flow.dark { 
-    --xy-node-boxshadow-default: 
-    0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.05), /* light shadow */
-    0px 3.54px 4.55px 0px rgba(255, 255, 255, 0.13), /* medium shadow */
-    0px 0.51px 1.01px 0px rgba(255, 255, 255, 0.2);  /* smallest shadow */  
-    --xy-theme-color-focus: #535353;
-}
- 
 /* Customizing Default Theming */
  
 .react-flow__node {

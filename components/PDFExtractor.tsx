@@ -108,14 +108,14 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
               accept="application/pdf"
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
-            <FileUp className="h-6 w-6 mb-4 text-zinc-400" />
+            <FileUp className="h-8 w-8 mb-4 text-zinc-400" />
             <p className="text-sm text-zinc-500 text-center px-8">
               {files.length > 0 ? (
                 <span className="font-medium">
                   {files[0].name}
                 </span>
               ) : (
-                <span>Drop your PDF here or click to browse.</span>
+                <span>Drop your PDF here (max 5 MB) or click to browse.</span>
               )}
             </p>
           </div>
