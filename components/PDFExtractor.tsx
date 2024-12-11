@@ -80,10 +80,10 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
   }
 
   return (
-    <Card className="w-full h-full border-none shadow-none">
-      <CardHeader className="text-center space-y-6">
+    <Card className="w-full h-full border-none shadow-none flex flex-col">
+      <CardHeader className="text-center space-y-6 flex-shrink-0">
         <div className="space-y-2 mt-4">
-          <CardTitle className="text-2xl ">
+          <CardTitle className="text-2xl tracking-normal font-semibold">
             Mind Map Generator
           </CardTitle>
           <CardDescription className="text-base">
@@ -96,19 +96,19 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
         </div>
       </CardHeader>
 
-      <CardContent className="flex-1 flex flex-col min-h-0">
-        <form onSubmit={handleSubmitWithFiles} className="space-y-4">
+      <CardContent className="flex-1 overflow-hidden flex flex-col">
+        <form onSubmit={handleSubmitWithFiles} className="space-y-4 flex-shrink-0">
           <div className="relative flex flex-col items-center justify-center 
-            border border-dashed border-[#E6E6E6] 
+            border border-dashed border-muted-foreground/25 
             bg-[#FCFCFC] hover:bg-[#F5F5F5] transition duration-500 hover:duration-200
-            rounded-lg p-6 transition-colors hover:border-muted-foreground/50">
+            rounded-lg px-8 py-6 transition-colors">
             <input
               type="file"
               onChange={handleFileChange}
               accept="application/pdf"
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
-            <FileUp className="h-8 w-8 mb-2 text-zinc-400" />
+            <FileUp className="h-6 w-6 mb-4 text-zinc-400" />
             <p className="text-sm text-zinc-500 text-center px-8">
               {files.length > 0 ? (
                 <span className="font-medium">
@@ -135,42 +135,41 @@ export default function PDFExtractor({ onExtractComplete, onPartialContent }: PD
           </Button>
         </form>
         
-        {/* Only show when there is content */}
         {extractedContent && extractedContent.keyPoints && (
-            <div className="flex-1 flex flex-col min-h-0">
-                <h2 className="text-sm text-zinc-400 font-mono mt-10">KEY POINTS</h2>
-                <div className="flex-1 mt-2 overflow-y-auto pr-2
-                scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent
-                hover:scrollbar-thumb-gray-400">
-                <div className="space-y-4">
-                    <h3 className="font-semibold text-lg">{extractedContent.title}</h3>
-                    <ul className="space-y-3">
-                    {extractedContent.keyPoints.reduce((acc: JSX.Element[], item, index) => {
-                        if (item && extractedContent.keyPoints) {
-                        if (index === 0 || item.context !== extractedContent.keyPoints[index - 1]?.context) {
+            <div className="flex-1 flex flex-col overflow-hidden mt-8 min-h-0">
+                <h2 className="text-sm text-zinc-400 font-mono flex-shrink-0">KEY POINTS</h2>
+                <div className="flex-1 overflow-y-auto mt-4 pr-2 min-h-0
+                    scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent
+                    hover:scrollbar-thumb-gray-400">
+                    <div className="space-y-4">
+                        <h3 className="font-semibold text-lg">{extractedContent.title}</h3>
+                        <ul className="space-y-3">
+                        {extractedContent.keyPoints.reduce((acc: JSX.Element[], item, index) => {
+                            if (item && extractedContent.keyPoints) {
+                            if (index === 0 || item.context !== extractedContent.keyPoints[index - 1]?.context) {
+                                acc.push(
+                                <h4 key={`context-${index}`} className="font-medium text-md mt-2">
+                                    {item.context || 'General'}
+                                </h4>
+                                )
+                            }
+                            
                             acc.push(
-                            <h4 key={`context-${index}`} className="font-medium text-md mt-2">
-                                {item.context || 'General'}
-                            </h4>
+                                <li key={index} className="space-y-1">
+                                <p className="text-sm text-muted-foreground">{item.point}</p>
+                                </li>
                             )
-                        }
-                        
-                        acc.push(
-                            <li key={index} className="space-y-1">
-                            <p className="text-sm text-muted-foreground">{item.point}</p>
-                            </li>
-                        )
-                        }
-                        return acc
-                    }, [])}
-                    </ul>
+                            }
+                            return acc
+                        }, [])}
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
         )}
       </CardContent>
 
-      <CardFooter className="mt-auto">
+      <CardFooter className="flex-shrink-0">
         {isLoading && (
           <div className="w-full space-y-2">
             <div className="flex justify-between text-sm text-muted-foreground">

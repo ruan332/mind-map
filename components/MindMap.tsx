@@ -20,6 +20,8 @@ interface MindMapProps {
   onNodeClick: (node: NodeData) => void
 }
 
+const proOptions = { hideAttribution: true };
+
 export default function MindMap({ data, onNodeClick }: MindMapProps) {
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => {
     const allIds = new Set<string>();
@@ -126,6 +128,7 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
       onNodeClick={handleNodeClick}
       draggable={true}
       fitView
+      proOptions={proOptions}
       className="bg-zinc-25 rounded-l overflow-hidden"    
     >
       <Controls />
