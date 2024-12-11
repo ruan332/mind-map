@@ -57,6 +57,7 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
           borderWidth: 1,
           borderRadius: 8,
           padding: 10,
+          width: 200,
         },
         className: `react-flow__node ${hasChildren ? 'cursor-pointer' : ''} rounded-lg border border-gray-200`,
         sourcePosition: Position.Right,
@@ -73,7 +74,9 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
           source: parentId,
           target: node.id,
           type: 'bezier',
-          animated: true,
+          style: {
+            stroke: '#DEDDDF',
+          },
         })
       }
 
@@ -131,10 +134,9 @@ export default function MindMap({ data, onNodeClick }: MindMapProps) {
       nodes={nodes}
       edges={edges}
       onNodeClick={handleNodeClick}
-      draggable={true}
+      nodesDraggable={true}
       fitView
       proOptions={proOptions}
-      className="bg-zinc-25 rounded-l overflow-hidden"    
     >
       <Controls />
       <MiniMap />
