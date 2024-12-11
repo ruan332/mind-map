@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { experimental_useObject } from "ai/react";
 import { toast } from "sonner";
 import { FileUp, Plus, Loader2 } from "lucide-react";
@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Link } from "@/components/ui/link";
 import { pdfExtractSchema, type PDFExtract } from "@/lib/schemas";
+import MindMap from '@/components/MindMap'
+import { NodeData } from '@/app/types/types'
 
 export default function PDFAnalyzer() {
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
+  const [selectedNode, setSelectedNode] = useState<NodeData | null>(null);
 
   const {
     submit,
@@ -70,6 +73,43 @@ export default function PDFAnalyzer() {
     );
     submit({ files: encodedFiles });
   };
+
+  // Convert extracted content to mind map data
+  const mindMapData = useMemo(() => {
+    if (!extractedContent) return null;
+
+    // Create root node
+    const rootNode: NodeData = {
+      id: 'root',
+      label: extractedContent.title || 'Untitled Document',
+      children: []
+    };
+
+    // Group points by context
+    const contextGroups: { [key: string]: NodeData } = {};
+    
+    if (!extractedContent.keyPoints) return rootNode;
+    extractedContent.keyPoints.forEach((item, index) => {
+      if (!item) return;
+      
+      const context = item.context || 'General';
+      if (!contextGroups[context]) {
+        contextGroups[context] = {
+          id: `context-${context}`,
+          label: context,
+          children: []
+        };
+        rootNode.children?.push(contextGroups[context]);
+      }
+      
+      contextGroups[context].children?.push({
+        id: `point-${index}`,
+        label: item.point || 'No content'
+      });
+    });
+
+    return rootNode;
+  }, [extractedContent]);
 
   return (
     <div className="min-h-[100dvh] w-full flex justify-center">
@@ -173,6 +213,16 @@ export default function PDFAnalyzer() {
           </CardFooter>
         )}
       </Card>
+
+      {/* Mind Map Section */}
+      {mindMapData && (
+        <div className="w-1/2 h-[600px] border rounded-lg">
+          <MindMap 
+            data={mindMapData} 
+            onNodeClick={(node) => setSelectedNode(node)}
+          />
+        </div>
+      )}
     </div>
   );
 }
