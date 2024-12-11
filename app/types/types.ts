@@ -1,7 +1,6 @@
 export interface NodeData {
     id: string;
     label: string;
-    context?: string;
     children?: NodeData[];
   }
   

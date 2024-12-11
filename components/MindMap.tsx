@@ -1,81 +1,136 @@
 'use client'
 
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import ReactFlow, {
   Node,
   Edge,
-  ConnectionLineType,
-  MarkerType,
+  Controls,
+  Position,
+  MiniMap,
+  Background,
+  BackgroundVariant
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { NodeData } from '@/app/types/types'
+import { FileUp } from 'lucide-react'
+import { Button } from './ui/button'
 
 interface MindMapProps {
   data: NodeData
   onNodeClick: (node: NodeData) => void
 }
 
-const MindMap: React.FC<MindMapProps> = ({ data, onNodeClick }) => {
+export default function MindMap({ data, onNodeClick }: MindMapProps) {
+  const [expandedNodes, setExpandedNodes] = useState<Set<string>>(() => {
+    const allIds = new Set<string>();
+    const collectIds = (node: NodeData) => {
+      allIds.add(node.id);
+      node.children?.forEach(child => collectIds(child));
+    };
+    collectIds(data);
+    return allIds;
+  });
+
+  const [nodePositions, setNodePositions] = useState<{ [key: string]: { x: number, y: number } }>({})
+
   const { nodes, edges } = useMemo(() => {
     const nodes: Node[] = []
     const edges: Edge[] = []
-
-    const addNode = (nodeData: NodeData, parentId?: string, depth: number = 0) => {
-      const x = depth * 200
-      const y = nodes.length * 100
-
+    let xOffset = 50
+    const ySpacing = 100
+    
+    const processNode = (node: NodeData, level: number, parentId?: string) => {
+      const nodeWidth = 200
+      const xSpacing = nodeWidth + 100
+      const hasChildren = node.children && node.children.length > 0
+      const isExpanded = expandedNodes.has(node.id)
+      
       nodes.push({
-        id: nodeData.id,
-        data: nodeData,
-        position: { x, y },
-        style: {
-          background: depth === 0 ? '#6366f1' : '#60a5fa',
-          color: 'white',
-          border: '1px solid #3730a3',
-          width: 180,
-          borderRadius: '5px',
-          padding: '10px',
+        id: node.id,
+        data: { 
+          label: node.label,
+          hasChildren
+        },
+        className: `react-flow__node-default ${hasChildren ? 'cursor-pointer' : ''} bg-white text-black p-2 rounded-lg border border-gray-200`,
+        sourcePosition: Position.Right,
+        targetPosition: Position.Left,
+        position: { 
+          x: level * xSpacing,
+          y: xOffset * ySpacing
         },
       })
 
       if (parentId) {
         edges.push({
-          id: `${parentId}-${nodeData.id}`,
+          id: `${parentId}-${node.id}`,
           source: parentId,
-          target: nodeData.id,
-          type: 'smoothstep',
+          target: node.id,
+          type: 'bezier',
           animated: true,
           style: { stroke: '#94a3b8' },
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            color: '#94a3b8',
-          },
         })
       }
 
-      nodeData.children?.forEach((child, index) => addNode(child, nodeData.id, depth + 1))
+      if (isExpanded) {
+        node.children?.forEach((child, index) => {
+          xOffset++
+          processNode(child, level + 1, node.id)
+        })
+      }
     }
 
-    addNode(data)
-
+    processNode(data, 0)
     return { nodes, edges }
-  }, [data])
+  }, [data, expandedNodes])
 
   const handleNodeClick = (_: React.MouseEvent, node: Node) => {
-    onNodeClick(node.data as NodeData)
+    if (node.data.hasChildren) {
+      setExpandedNodes(prev => {
+        const next = new Set(prev)
+        if (next.has(node.id)) {
+          next.delete(node.id)
+        } else {
+          next.add(node.id)
+        }
+        return next
+      })
+    }
+    onNodeClick(node.data)
+  }
+
+  if (!data.children?.length) {
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        <div className="text-center space-y-4 max-w-[400px] mx-auto p-8">
+          <FileUp className="h-12 w-12 text-zinc-400 mx-auto" />
+          <h3 className="text-xl font-medium">No Mind Map Yet</h3>
+          <p className="text-sm text-zinc-500">
+            Upload a PDF document to automatically generate an interactive mind map of its key points and concepts.
+          </p>
+          <Button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            variant="outline"
+            className="mt-4"
+          >
+            Create Mind Map
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodeClick={handleNodeClick}
-        fitView
-        attributionPosition="bottom-left"
-      />
-    </div>
+    <ReactFlow 
+      nodes={nodes}
+      edges={edges}
+      onNodeClick={handleNodeClick}
+      draggable={true}
+      fitView
+      className="bg-zinc-50 rounded-l overflow-hidden"    
+    >
+      <Controls />
+      <MiniMap />
+      <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+    </ReactFlow>
   )
 }
-
-export default MindMap

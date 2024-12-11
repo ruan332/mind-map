@@ -1,4 +1,5 @@
-import "./globals.css";
+import "@/app/(preview)/globals.css";
+import "@/app/(preview)/xyflow-theme.css";
 import { Metadata } from "next";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
@@ -8,8 +9,8 @@ const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ai-sdk-preview-pdf-support.vercel.app"),
-  title: "PDF Support Preview",
-  description: "Experimental preview of PDF support with the AI SDK",
+  title: "Bookworm",
+  description: "Map mind generator",
 };
 
 export default function RootLayout({
@@ -20,7 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${geist.className}`}>
       <body>
-        <ThemeProvider attribute="class" enableSystem forcedTheme="dark">
+        <ThemeProvider 
+          attribute="class" 
+          enableSystem={false} 
+          forcedTheme="light"
+        >
           <Toaster position="top-center" richColors />
           {children}
         </ThemeProvider>
