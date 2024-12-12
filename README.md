@@ -9,9 +9,7 @@ A simple web application that converts PDF documents into interactive mind maps 
   - Support for PDFs up to 5MB
   - Real-time processing feedback
 
-<br>
-
-<strong>🧠 AI-Powered Analysis</strong>
+<br><strong>🧠 AI-Powered Analysis</strong>
   - Automatic key point extraction
   - Context-aware organization
   - Powered by Google's Gemini Pro
@@ -26,11 +24,9 @@ A simple web application that converts PDF documents into interactive mind maps 
 ## Tech Stack
 
 - **Framework**: Next.js 14 with App Router
-- **UI Components**: Tailwind CSS + Radix UI
 - **Mind Map Visualization**: React Flow
-- **AI Integration**: Google Generative AI
-- **Styling**: Tailwind CSS with custom animations
-
+- **AI Integration**: Google Gemini and Vercel's AI SDK
+- **Styling**: Tailwind CSS
 ## Getting Started
 
 1. Clone the repository:
