@@ -1,48 +1,88 @@
-# AI SDK PDF Support Example
+# PDF Mind Map Maker
 
-This example demonstrates how to use the [AI SDK](https://sdk.vercel.ai/docs) with [Next.js](https://nextjs.org/) with the `useObject` hook to submit PDF messages to the AI provider of your choice (Google or Anthropic).
+A simple web application that converts PDF documents into interactive mind maps using Google's Gemini Pro AI. Built with Next.js and React Flow.
 
-## Deploy your own
+## Features
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-preview-pdf-support&env=GOOGLE_API_KEY&envDescription=API%20keys%20needed%20for%20application&envLink=google.com)
+<strong>📄 PDF Upload & Processing</strong>
+  - Drag & drop interface
+  - Support for PDFs up to 5MB
+  - Real-time processing feedback
 
-## How to use
+<br>
 
-Run [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+<strong>🧠 AI-Powered Analysis</strong>
+  - Automatic key point extraction
+  - Context-aware organization
+  - Powered by Google's Gemini Pro
+
+<br><strong>🗺️ Interactive Mind Maps</strong>
+  - Expandable/collapsible nodes
+  - Draggable interface
+  - Smooth animations
+  - Mini-map navigation
+  - Background grid for better visualization
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **UI Components**: Tailwind CSS + Radix UI
+- **Mind Map Visualization**: React Flow
+- **AI Integration**: Google Generative AI
+- **Styling**: Tailwind CSS with custom animations
+
+## Getting Started
+
+1. Clone the repository:
 
 ```bash
-npx create-next-app --example https://github.com/vercel-labs/ai-sdk-preview-pdf-support ai-sdk-preview-pdf-support-example
+git clone https://github.com/floguo/mind-map.git
 ```
+
+2. Install dependencies:
 
 ```bash
-yarn create next-app --example https://github.com/vercel-labs/ai-sdk-preview-pdf-support ai-sdk-preview-pdf-support-example
+npm install
+# or
+yarn install
 ```
+
+3. Create a `.env` file in the root directory with your Google AI API key:
+
+```env
+GOOGLE_GENERATIVE_AI_API_KEY=your_api_key_here
+```
+
+4. Run the development server:
 
 ```bash
-pnpm create next-app --example https://github.com/vercel-labs/ai-sdk-preview-pdf-support ai-sdk-preview-pdf-support-example
+npm run dev
+# or
+yarn dev
 ```
 
-To run the example locally you need to:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-1. Sign up for accounts with the AI providers you want to use (e.g., Google).
-2. Obtain API keys for Google provider.
-3. Set the required environment variables as shown in the `.env.example` file, but in a new file called `.env`.
-4. `npm install` to install the required dependencies.
-5. `npm run dev` to launch the development server.
+## Usage
 
+1. Upload a PDF document using the drag & drop interface or file picker
+2. Wait for the AI to analyze the document
+3. Explore the generated mind map:
+   - Click nodes to expand/collapse branches
+   - Drag nodes to rearrange the layout
+   - Use the mini-map for navigation
+   - Zoom and pan to explore larger maps
 
-## Environment Variables
+## Contributing
 
-The following environment variables are required:
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- `GOOGLE_GENERATIVE_AI_API_KEY`: Your Google Generative AI API key for authentication
+## License
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Learn More
-
-To learn more about Vercel AI SDK or Next.js take a look at the following resources:
-
-- [AI SDK docs](https://sdk.vercel.ai/docs)
-- [Vercel AI Playground](https://play.vercel.ai)
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-
+## Acknowledgments
+- [Vercel's AI SDK PDF Support](https://vercel.com/docs/ai/ai-sdk/pdf-support) for the PDF processing
+- [React Flow](https://reactflow.dev/) for the mind map visualization
+- [Google Generative AI](https://ai.google.dev/) for the AI-powered analysis
+- [Tailwind CSS](https://tailwindcss.com/) for the styling
